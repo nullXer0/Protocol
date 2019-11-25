@@ -1,10 +1,15 @@
-package com.crimsonValkyrie.protocol.santa;
+package com.crimsonValkyrie.protocol.misc.santa;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class SantaUtils
 {
+	private static Path directory = Paths.get("santa");
+
 	private static HashMap<String, String> santaMap = new HashMap<>();
 	private static HashMap<String, String> santeeMap = new HashMap<>();
 
@@ -98,9 +103,11 @@ public class SantaUtils
 	@SuppressWarnings("unchecked cast")
 	private static HashMap<SantaDataType, String> loadUserMap(String userID) throws IOException, ClassNotFoundException
 	{
-		if(new File("santa/" + userID).exists())
+		Path path = directory.resolve(userID);
+
+		if(Files.exists(path))
 		{
-			FileInputStream fileInputStream = new FileInputStream("santa/" + userID);
+			FileInputStream fileInputStream = new FileInputStream(path.toFile());
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
 			HashMap<SantaDataType, String> userMap = (HashMap<SantaDataType, String>) objectInputStream.readObject();
@@ -110,12 +117,20 @@ public class SantaUtils
 
 			return userMap;
 		}
+
 		return new HashMap<>();
 	}
 
 	private static void saveUserMap(HashMap<SantaDataType, String> userMap, String userID) throws IOException
 	{
-		FileOutputStream fileOutputStream = new FileOutputStream("santa/" + userID);
+		if(!Files.isDirectory(directory))
+		{
+			Files.createDirectory(directory);
+		}
+
+		Path path = directory.resolve(userID);
+
+		FileOutputStream fileOutputStream = new FileOutputStream(path.toFile());
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
 		objectOutputStream.writeObject(userMap);

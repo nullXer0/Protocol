@@ -1,6 +1,7 @@
 package com.crimsonValkyrie.protocol.commands.santa;
 
-import com.crimsonValkyrie.protocol.santa.SantaUtils;
+import com.crimsonValkyrie.protocol.commands.Categories;
+import com.crimsonValkyrie.protocol.misc.santa.SantaUtils;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -13,6 +14,7 @@ public class SantaAddress extends Command
 		name = "address";
 		guildOnly = false;
 
+		category = Categories.SANTA;
 		arguments = "[address]";
 		help = "Provide your address for your Santa to receive when they are chosen. leave empty to clear";
 	}

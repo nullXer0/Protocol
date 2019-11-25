@@ -1,5 +1,7 @@
 package com.crimsonValkyrie.protocol.main;
 
+import org.quartz.SchedulerException;
+
 import javax.security.auth.login.LoginException;
 import java.io.*;
 import java.util.Properties;
@@ -8,7 +10,7 @@ public class Main
 {
 	private static Properties properties = new Properties();
 
-	private Main() throws IOException, LoginException, InterruptedException
+	private Main() throws IOException, LoginException, InterruptedException, SchedulerException, ClassNotFoundException
 	{
 		loadDefaultProperties();
 		loadPropertiesFromFile(new File(".properties"));
@@ -41,7 +43,7 @@ public class Main
 		properties.setProperty("prefix", "!");
 	}
 
-	public static void main(String[] args) throws IOException, LoginException, InterruptedException
+	public static void main(String[] args) throws IOException, LoginException, InterruptedException, SchedulerException, ClassNotFoundException
 	{
 		new Main();
 	}

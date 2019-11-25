@@ -1,7 +1,8 @@
 package com.crimsonValkyrie.protocol.commands.santa.chat;
 
+import com.crimsonValkyrie.protocol.commands.Categories;
 import com.crimsonValkyrie.protocol.main.Bot;
-import com.crimsonValkyrie.protocol.santa.SantaUtils;
+import com.crimsonValkyrie.protocol.misc.santa.SantaUtils;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -15,6 +16,7 @@ public class ToSanta extends Command
 		name = "tosanta";
 		guildOnly = false;
 
+		category = Categories.SANTA;
 		arguments = "<message>";
 		help = "Send a message to your Santa";
 	}

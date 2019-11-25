@@ -1,7 +1,8 @@
 package com.crimsonValkyrie.protocol.commands.santa;
 
+import com.crimsonValkyrie.protocol.commands.Categories;
 import com.crimsonValkyrie.protocol.main.Bot;
-import com.crimsonValkyrie.protocol.santa.SantaUtils;
+import com.crimsonValkyrie.protocol.misc.santa.SantaUtils;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.api.entities.Guild;
@@ -19,6 +20,7 @@ public class SantaDistribute extends Command
 		name = "santa";
 		ownerCommand = true;
 
+		category = Categories.SANTA;
 		help = "Send everyone their Santas";
 	}
 
