@@ -2,6 +2,7 @@
 /target
 /src/main/resources/META-INF
 /out
+/classes
 /santa
 config.cfg
 .properties
