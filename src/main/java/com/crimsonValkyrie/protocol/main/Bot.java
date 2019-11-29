@@ -1,5 +1,6 @@
 package com.crimsonValkyrie.protocol.main;
 
+import com.crimsonValkyrie.protocol.commands.GroupMove;
 import com.crimsonValkyrie.protocol.commands.Shutdown;
 import com.crimsonValkyrie.protocol.commands.birthday.BirthdayCommand;
 import com.crimsonValkyrie.protocol.commands.birthday.ForceBirthday;
@@ -39,7 +40,8 @@ public class Bot
 						new ToSanta(),
 						new ToSantee(),
 						new BirthdayCommand(waiter),
-						new ForceBirthday())
+						new ForceBirthday(),
+						new GroupMove())
 				.build();
 
 
