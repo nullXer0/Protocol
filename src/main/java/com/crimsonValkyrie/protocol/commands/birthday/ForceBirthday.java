@@ -25,7 +25,7 @@ public class ForceBirthday extends Command
 		{
 			try
 			{
-				BirthdayScheduler.forceTrigger("job." + event.getArgs());
+				BirthdayScheduler.forceTrigger(event.getArgs());
 			}
 			catch(SchedulerException e)
 			{

@@ -9,7 +9,9 @@ import com.crimsonValkyrie.protocol.commands.santa.SantaDistribute;
 import com.crimsonValkyrie.protocol.commands.santa.SantaNote;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSanta;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSantee;
+import com.crimsonValkyrie.protocol.listeners.AFKListener;
 import com.crimsonValkyrie.protocol.listeners.ReactListener;
+import com.crimsonValkyrie.protocol.misc.AFKScheduler;
 import com.crimsonValkyrie.protocol.misc.birthday.BirthdayScheduler;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
@@ -50,12 +52,13 @@ public class Bot
 
 
 		jda = new JDABuilder(token)
-				.addEventListeners(commandClient, waiter, new ReactListener())
+				.addEventListeners(commandClient, waiter, new ReactListener(), new AFKListener())
 				.setCompression(Compression.NONE)
 				.build()
 				.awaitReady();
 
 		BirthdayScheduler.initialize();
+		AFKScheduler.initialize();
 	}
 
 	public static JDA getJDA()

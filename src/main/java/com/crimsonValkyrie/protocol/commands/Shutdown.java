@@ -1,6 +1,7 @@
 package com.crimsonValkyrie.protocol.commands;
 
 import com.crimsonValkyrie.protocol.main.Bot;
+import com.crimsonValkyrie.protocol.misc.AFKScheduler;
 import com.crimsonValkyrie.protocol.misc.birthday.BirthdayScheduler;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -22,6 +23,7 @@ public class Shutdown extends Command
 		try
 		{
 			BirthdayScheduler.shutdown();
+			AFKScheduler.shutdown();
 			Bot.getJDA().shutdown();
 		}
 		catch(SchedulerException e)
