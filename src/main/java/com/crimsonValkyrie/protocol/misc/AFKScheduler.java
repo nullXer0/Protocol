@@ -35,7 +35,7 @@ public class AFKScheduler
 			Trigger trigger = TriggerBuilder.newTrigger()
 					.withIdentity("AFKTrigger." + id)
 					.forJob(jobDetail)
-					.startAt(DateBuilder.futureDate(5, DateBuilder.IntervalUnit.SECOND))
+					.startAt(DateBuilder.futureDate(5, DateBuilder.IntervalUnit.MINUTE))
 					.build();
 
 			scheduler.scheduleJob(jobDetail, trigger);
