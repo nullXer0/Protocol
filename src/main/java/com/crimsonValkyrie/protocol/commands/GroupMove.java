@@ -13,6 +13,7 @@ public class GroupMove extends Command
 	{
 		name = "groupMove";
 		aliases = new String[]{"gMove"};
+		category = Categories.ADMIN;
 
 		arguments = "<channel> <channel>";
 		help = "Moves all the members from the 1st given voice channel to the 2nd given voice channel";

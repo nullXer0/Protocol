@@ -33,15 +33,19 @@ public class Bot
 		CommandClient commandClient = new CommandClientBuilder()
 				.setOwnerId(ownerID)
 				.setPrefix(prefix)
-				.addCommands(new Shutdown(),
+				.addCommands(
+						// Admin Commands
+						new Shutdown(),
+						new GroupMove(),
+						// Birthday Commands
+						new ForceBirthday(),
+						new BirthdayCommand(waiter),
+						// Santa Commands
 						new SantaAddress(),
 						new SantaNote(),
 						new SantaDistribute(),
 						new ToSanta(),
-						new ToSantee(),
-						new BirthdayCommand(waiter),
-						new ForceBirthday(),
-						new GroupMove())
+						new ToSantee())
 				.build();
 
 
