@@ -2,53 +2,47 @@ package com.crimsonValkyrie.protocol.listeners;
 
 import com.crimsonValkyrie.protocol.main.Bot;
 import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class ReactListener implements EventListener
+public class ReactListener extends ListenerAdapter
 {
-	public void onEvent(@Nonnull GenericEvent event)
-	{
-		if(event instanceof GenericMessageEvent)
-		{
-			onMessageEvent((GenericMessageEvent) event);
-		}
-	}
+	private static long message = 645689570322808832L;
+	private static long role = 645596062954029061L;
+	private static String emote = "🎁";
 
-	private void onMessageEvent(@Nonnull GenericMessageEvent event)
+	public void onMessageReactionAdd(@Nonnull MessageReactionAddEvent event)
 	{
-		// Secret Santa
-		long message = 645689570322808832L;
-		long role = 645596062954029061L;
-		String emote = "🎁";
+		super.onMessageReactionAdd(event);
 
 		if(event.getMessageIdLong() == message)
 		{
-			if(event instanceof MessageReactionAddEvent)
+			MessageReaction.ReactionEmote reactionEmote = event.getReactionEmote();
+			if(reactionEmote.isEmoji() && reactionEmote.getEmoji().equals(emote))
 			{
-				MessageReaction.ReactionEmote reactionEmote = ((MessageReactionAddEvent) event).getReactionEmote();
-				if(reactionEmote.isEmoji() && reactionEmote.getEmoji().equals(emote))
-				{
-					event.getGuild().addRoleToMember(Objects.requireNonNull(((MessageReactionAddEvent) event).getMember()), Objects.requireNonNull(event.getGuild().getRoleById(role))).queue();
-					Objects.requireNonNull(Objects.requireNonNull(Bot.getJDA().getGuildById(188929540968415233L)).getTextChannelById(645596398904934420L))
-							.sendMessage(((MessageReactionAddEvent) event).getUser().getAsMention() + " has joined the group, don't forget to read the pinned message").queue();
-				}
+				event.getGuild().addRoleToMember(Objects.requireNonNull(event.getMember()), Objects.requireNonNull(event.getGuild().getRoleById(role))).queue();
+				Objects.requireNonNull(Objects.requireNonNull(Bot.getJDA().getGuildById(188929540968415233L)).getTextChannelById(645596398904934420L))
+						.sendMessage(event.getUser().getAsMention() + " has joined the group, don't forget to read the pinned message").queue();
 			}
-			else if(event instanceof MessageReactionRemoveEvent)
+		}
+	}
+
+	public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event)
+	{
+		super.onMessageReactionRemove(event);
+
+		if(event.getMessageIdLong() == message)
+		{
+			MessageReaction.ReactionEmote reactionEmote = event.getReactionEmote();
+			if(reactionEmote.isEmoji() && reactionEmote.getEmoji().equals(emote))
 			{
-				MessageReaction.ReactionEmote reactionEmote = ((MessageReactionRemoveEvent) event).getReactionEmote();
-				if(reactionEmote.isEmoji() && reactionEmote.getEmoji().equals(emote))
-				{
-					event.getGuild().removeRoleFromMember(Objects.requireNonNull(((MessageReactionRemoveEvent) event).getMember()), Objects.requireNonNull(event.getGuild().getRoleById(role))).queue();
-					Objects.requireNonNull(Objects.requireNonNull(Bot.getJDA().getGuildById(188929540968415233L)).getTextChannelById(645596398904934420L))
-							.sendMessage(((MessageReactionRemoveEvent) event).getUser().getAsMention() + " has left the group").queue();
-				}
+				event.getGuild().removeRoleFromMember(Objects.requireNonNull(event.getMember()), Objects.requireNonNull(event.getGuild().getRoleById(role))).queue();
+				Objects.requireNonNull(Objects.requireNonNull(Bot.getJDA().getGuildById(188929540968415233L)).getTextChannelById(645596398904934420L))
+						.sendMessage(event.getUser().getAsMention() + " has left the group").queue();
 			}
 		}
 	}
