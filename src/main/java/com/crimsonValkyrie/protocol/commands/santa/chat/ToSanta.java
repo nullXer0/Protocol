@@ -27,7 +27,7 @@ public class ToSanta extends Command
 		{
 			String santaID = SantaUtils.getSanta(event.getAuthor().getId());
 			Objects.requireNonNull(Bot.getJDA().getUserById(santaID)).openPrivateChannel().complete()
-					.sendMessage("___***You have received a message from your Santa***___\n"+event.getArgs()).queue();
+					.sendMessage("___***You have received a message from your Santee***___\n"+event.getArgs()).queue();
 			event.reply("Your message has been sent");
 		}
 		catch(IOException | ClassNotFoundException e)
