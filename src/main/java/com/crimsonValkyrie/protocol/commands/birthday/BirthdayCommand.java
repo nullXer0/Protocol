@@ -1,24 +1,18 @@
 package com.crimsonValkyrie.protocol.commands.birthday;
 
 import com.crimsonValkyrie.protocol.commands.Categories;
+import com.crimsonValkyrie.protocol.commands.CommandUtils;
 import com.crimsonValkyrie.protocol.misc.birthday.BirthdayScheduler;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
-import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.quartz.SchedulerException;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 public class BirthdayCommand extends Command
 {
-	private final EventWaiter waiter;
-
-	public BirthdayCommand(EventWaiter waiter)
+	public BirthdayCommand()
 	{
-		this.waiter = waiter;
 		name = "birthday";
 		guildOnly = false;
 
@@ -44,7 +38,7 @@ public class BirthdayCommand extends Command
 			if(BirthdayScheduler.birthdayExists(id))
 			{
 				event.reply("Do you want to 'edit' or 'remove' your birthday?");
-				waitForResponse(event, e ->
+				CommandUtils.waitForResponse(event, 30, e ->
 				{
 					String message = e.getMessage().getContentRaw().toLowerCase();
 					if(message.equals("edit"))
@@ -103,7 +97,7 @@ public class BirthdayCommand extends Command
 	private void addBirthday(CommandEvent event, long id)
 	{
 		event.reply("What day were you born on? (ex. 22)");
-		waitForResponse(event, e ->
+		CommandUtils.waitForResponse(event, 30, e ->
 		{
 			int day;
 			try
@@ -112,7 +106,7 @@ public class BirthdayCommand extends Command
 				if(day >= 1 && day <= 31)
 				{
 					event.reply("What month were you born in? (ex. 7)");
-					waitForResponse(event, e1 ->
+					CommandUtils.waitForResponse(event, 30, e1 ->
 					{
 						int month;
 						try
@@ -121,7 +115,7 @@ public class BirthdayCommand extends Command
 							if(month >= 1 && month <= 12)
 							{
 								event.reply("What year were you born in? (ex. 1998) 'skip' to skip");
-								waitForResponse(event, e2 ->
+								CommandUtils.waitForResponse(event, 30, e2 ->
 								{
 									int year;
 									String userInput;
@@ -191,14 +185,5 @@ public class BirthdayCommand extends Command
 				event.reply("Invalid response, cancelling");
 			}
 		});
-	}
-
-	private void waitForResponse(CommandEvent event, Consumer<MessageReceivedEvent> consumer)
-	{
-		waiter.waitForEvent(MessageReceivedEvent.class,
-				e -> e.getAuthor().equals(event.getAuthor())
-						&& e.getChannel().equals(event.getChannel())
-						&& !e.getMessage().equals(event.getMessage()), consumer,
-				30, TimeUnit.SECONDS, () -> event.reply("No response. cancelling"));
 	}
 }

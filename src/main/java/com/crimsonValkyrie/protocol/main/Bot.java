@@ -1,5 +1,6 @@
 package com.crimsonValkyrie.protocol.main;
 
+import com.crimsonValkyrie.protocol.commands.CommandUtils;
 import com.crimsonValkyrie.protocol.commands.GroupMove;
 import com.crimsonValkyrie.protocol.commands.Shutdown;
 import com.crimsonValkyrie.protocol.commands.birthday.BirthdayCommand;
@@ -32,6 +33,8 @@ public class Bot
 	{
 		EventWaiter waiter = new EventWaiter();
 
+		CommandUtils.initiailize(waiter);
+
 		CommandClient commandClient = new CommandClientBuilder()
 				.setOwnerId(ownerID)
 				.setPrefix(prefix)
@@ -41,7 +44,7 @@ public class Bot
 						new GroupMove(),
 						// Birthday Commands
 						new ForceBirthday(),
-						new BirthdayCommand(waiter),
+						new BirthdayCommand(),
 						// Santa Commands
 						new SantaAddress(),
 						new SantaNote(),
