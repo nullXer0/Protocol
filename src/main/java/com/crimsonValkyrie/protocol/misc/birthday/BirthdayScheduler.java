@@ -112,7 +112,7 @@ public class BirthdayScheduler
 		try
 		{
 			JobBuilder jobBuilder = JobBuilder.newJob(BirthdayJob.class)
-					.withIdentity("job." + id)
+					.withIdentity("BirthdayJob." + id)
 					.usingJobData("id", id);
 			if(year != 0)
 			{
@@ -121,7 +121,7 @@ public class BirthdayScheduler
 			JobDetail jobDetail = jobBuilder.build();
 
 			Trigger trigger = TriggerBuilder.newTrigger()
-					.withIdentity("trigger." + id)
+					.withIdentity("BirthdayTrigger." + id)
 					.forJob(jobDetail)
 					.withSchedule(CronScheduleBuilder.cronSchedule("0 0 12 " + day + " " + month + " ?").withMisfireHandlingInstructionFireAndProceed()).startNow()
 					.build();
@@ -137,7 +137,7 @@ public class BirthdayScheduler
 
 	public static void forceTrigger(String id) throws SchedulerException
 	{
-		scheduler.triggerJob(JobKey.jobKey(id));
+		scheduler.triggerJob(JobKey.jobKey("BirthdayJob." + id));
 	}
 
 	public static boolean isInitialized()

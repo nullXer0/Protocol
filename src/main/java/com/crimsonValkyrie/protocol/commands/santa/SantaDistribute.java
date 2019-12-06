@@ -34,16 +34,17 @@ public class SantaDistribute extends Command
 			for(Member santa : santaList)
 			{
 				int santee;
+				HashMap<SantaUtils.SantaDataType, String> santeeMap = new HashMap<>();
+
 				santee = random.nextInt(santeeList.size());
 				while(santeeList.get(santee) == santa)
 				{
 					santee = random.nextInt(santeeList.size());
 				}
 
-				HashMap<SantaUtils.SantaDataType, String> santeeMap = new HashMap<>();
 				try
 				{
-					santeeMap = SantaUtils.getUserMap(santaList.get(santee).getId());
+					santeeMap = SantaUtils.getUserMap(santeeList.get(santee).getId());
 				}
 				catch(IOException | ClassNotFoundException e)
 				{

@@ -14,7 +14,7 @@ public class ForceBirthday extends Command
 		ownerCommand = true;
 		guildOnly = false;
 
-		category = Categories.ADMIN;
+		category = Categories.BIRTHDAY;
 		arguments = "<id>";
 		help = "Forces the bot the announce the birthday of the given id";
 	}
@@ -25,7 +25,7 @@ public class ForceBirthday extends Command
 		{
 			try
 			{
-				BirthdayScheduler.forceTrigger("job." + event.getArgs());
+				BirthdayScheduler.forceTrigger(event.getArgs());
 			}
 			catch(SchedulerException e)
 			{

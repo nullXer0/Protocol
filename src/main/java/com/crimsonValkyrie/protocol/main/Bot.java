@@ -1,5 +1,6 @@
 package com.crimsonValkyrie.protocol.main;
 
+import com.crimsonValkyrie.protocol.commands.CommandUtils;
 import com.crimsonValkyrie.protocol.commands.GroupMove;
 import com.crimsonValkyrie.protocol.commands.Shutdown;
 import com.crimsonValkyrie.protocol.commands.birthday.BirthdayCommand;
@@ -9,7 +10,9 @@ import com.crimsonValkyrie.protocol.commands.santa.SantaDistribute;
 import com.crimsonValkyrie.protocol.commands.santa.SantaNote;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSanta;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSantee;
+import com.crimsonValkyrie.protocol.listeners.AFKListener;
 import com.crimsonValkyrie.protocol.listeners.ReactListener;
+import com.crimsonValkyrie.protocol.misc.AFKScheduler;
 import com.crimsonValkyrie.protocol.misc.birthday.BirthdayScheduler;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
@@ -30,28 +33,35 @@ public class Bot
 	{
 		EventWaiter waiter = new EventWaiter();
 
+		CommandUtils.initiailize(waiter);
+
 		CommandClient commandClient = new CommandClientBuilder()
 				.setOwnerId(ownerID)
 				.setPrefix(prefix)
-				.addCommands(new Shutdown(),
+				.addCommands(
+						// Admin Commands
+						new Shutdown(),
+						new GroupMove(),
+						// Birthday Commands
+						new ForceBirthday(),
+						new BirthdayCommand(),
+						// Santa Commands
 						new SantaAddress(),
 						new SantaNote(),
 						new SantaDistribute(),
 						new ToSanta(),
-						new ToSantee(),
-						new BirthdayCommand(waiter),
-						new ForceBirthday(),
-						new GroupMove())
+						new ToSantee())
 				.build();
 
 
 		jda = new JDABuilder(token)
-				.addEventListeners(commandClient, waiter, new ReactListener())
+				.addEventListeners(commandClient, waiter, new ReactListener(), new AFKListener())
 				.setCompression(Compression.NONE)
 				.build()
 				.awaitReady();
 
 		BirthdayScheduler.initialize();
+		AFKScheduler.initialize();
 	}
 
 	public static JDA getJDA()

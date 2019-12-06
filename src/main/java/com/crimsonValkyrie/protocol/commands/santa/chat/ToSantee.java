@@ -1,6 +1,7 @@
 package com.crimsonValkyrie.protocol.commands.santa.chat;
 
 import com.crimsonValkyrie.protocol.commands.Categories;
+import com.crimsonValkyrie.protocol.commands.CommandUtils;
 import com.crimsonValkyrie.protocol.main.Bot;
 import com.crimsonValkyrie.protocol.misc.santa.SantaUtils;
 import com.jagrosh.jdautilities.command.Command;
@@ -23,20 +24,36 @@ public class ToSantee extends Command
 
 	protected void execute(CommandEvent event)
 	{
-		try
+		event.reply("You are about to send this message to your ***Santee***. You know who your Santee is, they are the one you are buying a gift for\nAre you sure you want to send the message?");
+		CommandUtils.waitForResponse(event, 15, e ->
 		{
-			String santeeID = SantaUtils.getSantee(event.getAuthor().getId());
-			Objects.requireNonNull(Bot.getJDA().getUserById(santeeID)).openPrivateChannel().complete()
-					.sendMessage("___***You have received a message from your Santee***___\n"+event.getArgs()).queue();
-			event.reply("Your message has been sent");
-		}
-		catch(IOException | ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch(SantaUtils.SanteeNotFoundException e)
-		{
-			event.reply("Santee was unable to be found, have you been given a Santee yet?");
-		}
+			String messageRaw = e.getMessage().getContentRaw().toLowerCase();
+			if(messageRaw.equals("y") || messageRaw.equals("ye") || messageRaw.equals("yes"))
+			{
+				try
+				{
+					String santeeID = SantaUtils.getSantee(event.getAuthor().getId());
+					Objects.requireNonNull(Bot.getJDA().getUserById(santeeID)).openPrivateChannel().complete()
+							.sendMessage("___***You have received a message from your Santa***___\n" + event.getArgs()).queue();
+					event.reply("Your message has been sent");
+				}
+				catch(IOException | ClassNotFoundException exception)
+				{
+					exception.printStackTrace();
+				}
+				catch(SantaUtils.SanteeNotFoundException exception)
+				{
+					event.reply("Santee was unable to be found, have you been given a Santee yet?");
+				}
+			}
+			else if(messageRaw.equals("n") || messageRaw.equals("no"))
+			{
+				event.reply("Cancelling message");
+			}
+			else
+			{
+				event.reply("Invalid response. Cancelling message");
+			}
+		});
 	}
 }
