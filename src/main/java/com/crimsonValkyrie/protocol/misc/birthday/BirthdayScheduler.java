@@ -44,7 +44,7 @@ public class BirthdayScheduler
 
 	public static boolean removeBirthday(Long id) throws SchedulerException, IOException
 	{
-		if(scheduler.deleteJob(JobKey.jobKey("job." + id)))
+		if(scheduler.deleteJob(JobKey.jobKey("BirthdayJob." + id)))
 		{
 			birthdayMap.remove(id);
 			saveBirthdaysToFile();

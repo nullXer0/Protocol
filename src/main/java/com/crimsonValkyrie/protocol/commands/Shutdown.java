@@ -1,8 +1,6 @@
 package com.crimsonValkyrie.protocol.commands;
 
 import com.crimsonValkyrie.protocol.main.Bot;
-import com.crimsonValkyrie.protocol.misc.AFKScheduler;
-import com.crimsonValkyrie.protocol.misc.birthday.BirthdayScheduler;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import org.quartz.SchedulerException;
@@ -13,6 +11,7 @@ public class Shutdown extends Command
 	{
 		name = "shutdown";
 		ownerCommand = true;
+		guildOnly = false;
 
 		category = Categories.ADMIN;
 		help = "Shuts the bot down";
@@ -22,13 +21,11 @@ public class Shutdown extends Command
 	{
 		try
 		{
-			BirthdayScheduler.shutdown();
-			AFKScheduler.shutdown();
-			Bot.getJDA().shutdown();
+			Bot.shutdown();
 		}
 		catch(SchedulerException e)
 		{
-			event.reply("Exception occured when trying to shut down the scheduler, unable to shut down bot");
+			event.reply("Bot failed to shutdown. This is a major problem");
 			e.printStackTrace();
 		}
 	}

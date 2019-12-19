@@ -6,7 +6,7 @@ import com.crimsonValkyrie.protocol.commands.Shutdown;
 import com.crimsonValkyrie.protocol.commands.birthday.BirthdayCommand;
 import com.crimsonValkyrie.protocol.commands.birthday.ForceBirthday;
 import com.crimsonValkyrie.protocol.commands.santa.SantaAddress;
-import com.crimsonValkyrie.protocol.commands.santa.SantaDistribute;
+import com.crimsonValkyrie.protocol.commands.santa.SantaAdmin;
 import com.crimsonValkyrie.protocol.commands.santa.SantaNote;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSanta;
 import com.crimsonValkyrie.protocol.commands.santa.chat.ToSantee;
@@ -48,7 +48,7 @@ public class Bot
 						// Santa Commands
 						new SantaAddress(),
 						new SantaNote(),
-						new SantaDistribute(),
+						new SantaAdmin(),
 						new ToSanta(),
 						new ToSantee())
 				.build();
@@ -67,5 +67,12 @@ public class Bot
 	public static JDA getJDA()
 	{
 		return jda;
+	}
+
+	public static void shutdown() throws SchedulerException
+	{
+		BirthdayScheduler.shutdown();
+		AFKScheduler.shutdown();
+		jda.shutdown();
 	}
 }

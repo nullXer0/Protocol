@@ -86,6 +86,22 @@ public class SantaUtils
 		saveUserMap(userMap, userID);
 	}
 
+	public static void clearSanta(String userID) throws IOException, ClassNotFoundException
+	{
+		HashMap<SantaDataType, String> userMap = loadUserMap(userID);
+		userMap.remove(SantaDataType.SANTA);
+		santaMap.remove(userID);
+		saveUserMap(userMap, userID);
+	}
+
+	public static void clearSantee(String userID) throws IOException, ClassNotFoundException
+	{
+		HashMap<SantaDataType, String> userMap = loadUserMap(userID);
+		userMap.remove(SantaDataType.SANTEE);
+		santeeMap.remove(userID);
+		saveUserMap(userMap, userID);
+	}
+
 	public static void writeAddress(String address, String userID) throws IOException, ClassNotFoundException
 	{
 		HashMap<SantaDataType, String> userMap = loadUserMap(userID);
