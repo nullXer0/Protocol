@@ -33,7 +33,7 @@ public class Bot
 	{
 		EventWaiter waiter = new EventWaiter();
 
-		CommandUtils.initiailize(waiter);
+		CommandUtils.initialize(waiter);
 
 		CommandClient commandClient = new CommandClientBuilder()
 				.setOwnerId(ownerID)
@@ -54,7 +54,7 @@ public class Bot
 				.build();
 
 
-		jda = new JDABuilder(token)
+		jda = JDABuilder.createDefault(token)
 				.addEventListeners(commandClient, waiter, new ReactListener(), new AFKListener())
 				.setCompression(Compression.NONE)
 				.build()

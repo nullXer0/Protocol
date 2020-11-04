@@ -17,8 +17,6 @@ public class ReactListener extends ListenerAdapter
 
 	public void onMessageReactionAdd(@Nonnull MessageReactionAddEvent event)
 	{
-		super.onMessageReactionAdd(event);
-
 		if(event.getMessageIdLong() == message)
 		{
 			MessageReaction.ReactionEmote reactionEmote = event.getReactionEmote();
@@ -33,8 +31,6 @@ public class ReactListener extends ListenerAdapter
 
 	public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event)
 	{
-		super.onMessageReactionRemove(event);
-
 		if(event.getMessageIdLong() == message)
 		{
 			MessageReaction.ReactionEmote reactionEmote = event.getReactionEmote();

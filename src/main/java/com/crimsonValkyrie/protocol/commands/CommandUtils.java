@@ -11,7 +11,7 @@ public class CommandUtils
 {
 	private static EventWaiter waiter;
 
-	public static void initiailize(EventWaiter waiter)
+	public static void initialize(EventWaiter waiter)
 	{
 		CommandUtils.waiter = waiter;
 	}
