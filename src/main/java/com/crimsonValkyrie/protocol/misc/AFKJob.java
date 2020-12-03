@@ -18,6 +18,6 @@ public class AFKJob implements Job
 
 		guild.moveVoiceMember(Objects.requireNonNull(guild.getMemberById(id)), guild.getVoiceChannelById(485312780241469440L)).queue();
 		Objects.requireNonNull(Bot.getJDA().getUserById(id)).openPrivateChannel().complete()
-				.sendMessage("You have been moved to AFK because you were deafened for more than 5 minutes").queue();
+				.sendMessage("You have been moved to AFK because you were deafened for more than 10 minutes").queue();
 	}
 }
